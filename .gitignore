@@ -1,3 +1,5 @@
 /target
 /bump/src/main.rs
+/bump/src/target/
+/bump/.DS_Store
 .DS_Store
