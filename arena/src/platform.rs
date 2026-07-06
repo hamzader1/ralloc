@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use core::ptr::null_mut;
 use libc::_SC_PAGE_SIZE;
 use libc::MAP_ANONYMOUS;
