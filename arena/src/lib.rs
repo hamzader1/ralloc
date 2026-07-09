@@ -84,6 +84,10 @@ impl Arena {
         let checked_cursor_alignment = size.checked_add(align - 1)?;
         Some(checked_cursor_alignment & !(align - 1))
     }
+
+   pub fn align_up_unchecked(size: usize, align: usize) -> usize {
+    (size + align -1) &!(align -1)
+    }
     fn grow(&mut self, requested_size: usize, requested_align: usize) {
         let prev_block_header = self.current_block;
         let prev_block_size = unsafe { (*self.current_block).mmap_size };
