@@ -113,9 +113,10 @@ impl Arena {
     fn write_metadata(&mut self, block_header: BlockHeader) {
         let header_ptr = block_header.mmap_ptr as *mut BlockHeader;
         unsafe {
-            self.cursor = block_header.mmap_ptr.add(
-                (size_of::<BlockHeader>() + align_of::<BlockHeader>() - 1)
-                    & !(align_of::<BlockHeader>() - 1),
+            // TODO: call align_up function
+            //
+            self.cursor = block_header.ptr().add(
+                Self::align_up_unchecked(size_of::<BlockHeader>(), align_of::<BlockHeader>())
             );
             header_ptr.write(block_header);
             self.current_block = header_ptr;
