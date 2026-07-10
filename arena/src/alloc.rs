@@ -18,11 +18,9 @@ impl std::fmt::Display for AllocatorError {
             Self::OutOfMemory => {
                 write!(f, "not enough memory available for allocation")
             }
-
             Self::ZeroSizedType => {
                 write!(f, "cannot allocate a zero-sized type")
             }
-
             Self::AllocationFailed => {
                 write!(f, "memory allocation failed")
             }
