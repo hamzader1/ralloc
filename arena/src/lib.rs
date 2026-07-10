@@ -17,6 +17,7 @@ pub struct Arena {
     current_block: *mut BlockHeader,
     cursor: *mut u8,
     end: *mut u8,
+    double_allowed: bool,
 }
 pub struct EmptyBlockWrapper(BlockHeader);
 unsafe impl Sync for EmptyBlockWrapper {}
@@ -61,6 +62,7 @@ impl Arena {
             current_block: EMPTY_BLOCK.get() as *const BlockHeader as *mut BlockHeader,
             cursor: EMPTY_BLOCK.get_ptr(),
             end: EMPTY_BLOCK.get_ptr(),
+            double_allowed: true,
         }
     }
 
