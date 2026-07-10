@@ -208,6 +208,11 @@ impl Arena {
             ))
         }
     }
+    fn clear(&mut self) {
+        self.deallocate_blocks_until_stop(self.current_block, EMPTY_BLOCK.get());
+        self.cursor = EMPTY_BLOCK.get_ptr();
+        self.end = EMPTY_BLOCK.get_ptr();
+    }
 
     pub fn align_up(size: usize, align: usize) -> Option<usize> {
         let checked_cursor_alignment = size.checked_add(align - 1)?;
