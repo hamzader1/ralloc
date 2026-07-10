@@ -177,10 +177,11 @@ impl Arena {
         unsafe {
             // TODO: call align_up function
             //
-            self.cursor = block_header.ptr().add(Self::align_up_unchecked(
-                size_of::<BlockHeader>(),
-                align_of::<BlockHeader>(),
-            ));
+            self.reset_cursor_to(&block_header);
+            // self.cursor = block_header.ptr().add(Self::align_up_unchecked(
+            //     size_of::<BlockHeader>(),
+            //     align_of::<BlockHeader>(),
+            // ));
             header_ptr.write(block_header);
             self.current_block = header_ptr;
         }
