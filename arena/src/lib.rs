@@ -226,6 +226,14 @@ impl Arena {
             ))
         }
     }
+    pub fn alloc_val<T>(&mut self, val: T) -> *mut T {
+        let layout = Layout::new::<T>();
+        let ptr = self.alloc(layout) as *mut T;
+        unsafe {
+            ptr.write(val);
+        }
+        ptr
+    }
 }
 
 impl Drop for Arena {
