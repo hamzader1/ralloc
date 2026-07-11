@@ -1,4 +1,3 @@
-#![allow(warnings)]
 /// The allocator owns one or more memory blocks obtained from the platform
 /// layer. Each block stores a small header at the beginning of the mapping,
 /// followed by user allocations. Allocation is bump-style: the arena keeps a
@@ -475,14 +474,14 @@ impl Arena {
         let is_valid_align = old_layout.align() >= new_layout.align();
         if is_valid_align && self.is_last_allocation(ptr, old_layout.size()) {
             let delta = new_layout.size() - old_layout.size();
-            if let Some(_) = self.try_allocate_fast(delta, old_layout.align()) {
+            if self.try_allocate_fast(delta, old_layout.align()).is_some() {
                 return ptr;
             }
         }
         unsafe {
             let new_ptr = self.alloc(new_layout);
             core::ptr::copy_nonoverlapping(ptr, new_ptr, old_layout.size());
-            return new_ptr;
+            new_ptr
         }
     }
 
@@ -565,7 +564,7 @@ impl std::default::Default for Arena {
 #[cfg(test)]
 mod tests {
     use crate::alloc::AllocatorError;
-    use crate::{Arena, BlockHeader, EMPTY_BLOCK, Platform};
+    use crate::{Arena, BlockHeader, Platform, EMPTY_BLOCK};
     use std::alloc::Layout;
 
     #[test]
