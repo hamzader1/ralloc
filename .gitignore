@@ -6,5 +6,7 @@
 /arena/src/main.rs
 /arena/target/
 /.idea/
+allocator-project-handoff.md
+
 
 .DS_Store
