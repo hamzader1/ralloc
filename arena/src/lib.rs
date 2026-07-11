@@ -243,6 +243,14 @@ impl Arena {
             return new_ptr;
         }
     }
+    pub fn shrink(&mut self, ptr: *mut u8, old_layout: Layout, new_layout: Layout) {
+        let is_valid_to_shrink =
+            new_layout.size() <= old_layout.size() && old_layout.align() >= new_layout.align();
+        if is_valid_to_shrink && self.is_last_allocation(ptr, old_layout.size()) {
+            let delta = old_layout.size() - new_layout.size();
+            unsafe { self.cursor = self.cursor.sub(delta) }
+        }
+    }
 }
 
 impl Drop for Arena {
