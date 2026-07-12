@@ -62,7 +62,7 @@ pub struct Arena {
     /// After `reset`, the arena keeps the current block and disables immediate
     /// doubling for the next growth. This avoids growing too aggressively after
     /// a reset cycle.
-    pub double_allowed: bool,
+    pub(crate) double_allowed: bool,
 }
 
 /// Wrapper that allows the static empty sentinel to satisfy `Sync`.
@@ -586,7 +586,7 @@ impl std::default::Default for Arena {
 #[cfg(test)]
 mod tests {
     use crate::alloc::AllocatorError;
-    use crate::{Arena, BlockHeader, EMPTY_BLOCK, Platform};
+    use crate::{Arena, BlockHeader, Platform, EMPTY_BLOCK};
     use std::alloc::Layout;
 
     #[test]
